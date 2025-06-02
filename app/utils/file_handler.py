@@ -133,11 +133,11 @@ async def upload_avatar(file: UploadFile) -> dict:
     )
 
 
-async def upload_image(file: UploadFile) -> dict:
-    """上传图片"""
+async def upload_image(file: UploadFile, folder: str = "images") -> dict:
+    """上传图片（通用图片上传函数）"""
     return await upload_file(
         file=file,
-        folder="images",
+        folder=folder,
         max_size=5 * 1024 * 1024,  # 5MB
         allowed_types=list(ALLOWED_IMAGE_TYPES)
     )
