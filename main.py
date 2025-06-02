@@ -9,7 +9,7 @@ import os
 from contextlib import asynccontextmanager
 
 from app.db.database import create_tables
-from app.routers import auth, users, merchants, boats, services, products, orders, reviews
+from app.routers import auth, users, merchants, boats, services, products, orders, reviews, payments
 from app.utils.logger import logger
 
 
@@ -160,6 +160,7 @@ app.include_router(services.router, prefix="/api/v1/services", tags=["服务"])
 app.include_router(products.router, prefix="/api/v1/products", tags=["农产品"])
 app.include_router(orders.router, prefix="/api/v1/orders", tags=["订单"])
 app.include_router(reviews.router, prefix="/api/v1/reviews", tags=["评价"])
+app.include_router(payments.router, prefix="/api/v1/payments", tags=["支付"])
 
 
 if __name__ == "__main__":
