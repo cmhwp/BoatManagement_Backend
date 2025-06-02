@@ -6,7 +6,7 @@ from .settings import settings
 # 创建数据库引擎
 engine = create_engine(
     settings.database_url,
-    echo=settings.debug,  # 在调试模式下打印SQL语句
+    echo= False,
     pool_pre_ping=True,   # 连接池预ping
     pool_recycle=3600,    # 连接回收时间
 )
