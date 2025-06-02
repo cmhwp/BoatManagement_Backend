@@ -27,4 +27,4 @@ ENV/
 # 上传的文件
 uploads/
 
-*.cursorrule
+*.cursorrules

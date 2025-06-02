@@ -11,18 +11,19 @@ class RoleApplication(Base):
 
     id = Column(Integer, primary_key=True, index=True, comment="申请ID")
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, comment="申请用户ID")
-    target_role = Column(SQLEnum(UserRole), nullable=False, comment="申请的目标角色")
     current_role = Column(SQLEnum(UserRole), nullable=False, comment="当前角色")
+    target_role = Column(SQLEnum(UserRole), nullable=False, comment="目标角色")
+    status = Column(SQLEnum(ApplicationStatus), default=ApplicationStatus.PENDING, comment="申请状态")
     
     # 申请信息
     reason = Column(Text, comment="申请理由")
-    supporting_documents = Column(Text, comment="支持文件URL，JSON格式存储")
-    contact_info = Column(String(255), comment="联系方式")
+    business_license = Column(String(255), comment="营业执照文件URL")
+    certificates = Column(Text, comment="相关证书文件URLs(JSON格式)")
+    contact_info = Column(Text, comment="联系方式")
     
     # 审核信息
-    status = Column(SQLEnum(ApplicationStatus), default=ApplicationStatus.PENDING, comment="申请状态")
     reviewer_id = Column(Integer, ForeignKey("users.id"), comment="审核人ID")
-    review_comment = Column(Text, comment="审核意见")
+    review_note = Column(Text, comment="审核备注")
     reviewed_at = Column(DateTime, comment="审核时间")
     
     # 时间字段
@@ -30,7 +31,7 @@ class RoleApplication(Base):
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), comment="更新时间")
     
     # 关系
-    applicant = relationship("User", foreign_keys=[user_id], back_populates="role_applications")
+    user = relationship("User", foreign_keys=[user_id], back_populates="role_applications")
     reviewer = relationship("User", foreign_keys=[reviewer_id])
     
     def __repr__(self):

@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Bool
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from app.config.database import Base
-from .enums import CertificateType, CertificateStatus
+from .enums import CertificateType
 
 
 class Certificate(Base):
@@ -12,38 +12,31 @@ class Certificate(Base):
     id = Column(Integer, primary_key=True, index=True, comment="证书ID")
     
     # 关联信息
-    merchant_id = Column(Integer, ForeignKey("merchants.id"), comment="商家ID")
-    crew_id = Column(Integer, ForeignKey("crew_info.id"), comment="船员ID")
+    owner_id = Column(Integer, comment="持有者ID")
+    owner_type = Column(String(20), comment="持有者类型(user/merchant/boat)")
     
-    # 证书基本信息
+    # 证书信息
     certificate_type = Column(SQLEnum(CertificateType), nullable=False, comment="证书类型")
+    certificate_no = Column(String(100), unique=True, nullable=False, comment="证书编号")
     certificate_name = Column(String(100), nullable=False, comment="证书名称")
-    certificate_number = Column(String(50), unique=True, comment="证书编号")
-    issuing_authority = Column(String(100), comment="颁发机构")
     
-    # 时间信息
+    # 颁发信息
+    issuing_authority = Column(String(100), comment="颁发机构")
     issue_date = Column(DateTime, comment="颁发日期")
     expiry_date = Column(DateTime, comment="到期日期")
-    renewal_date = Column(DateTime, comment="续期日期")
     
-    # 证书状态
-    status = Column(SQLEnum(CertificateStatus), default=CertificateStatus.PENDING, comment="证书状态")
+    # 证书文件
+    file_url = Column(String(255), comment="证书文件URL")
     
-    # 文件信息
-    certificate_file_url = Column(String(255), comment="证书文件URL")
-    scan_copy_url = Column(String(255), comment="扫描件URL")
+    # 验证状态
+    is_verified = Column(Boolean, default=False, comment="是否已验证")
+    verified_at = Column(DateTime, comment="验证时间")
+    verified_by = Column(Integer, ForeignKey("users.id"), comment="验证人ID")
     
-    # 审核信息
-    reviewer_id = Column(Integer, ForeignKey("users.id"), comment="审核人ID")
-    review_notes = Column(Text, comment="审核备注")
-    reviewed_at = Column(DateTime, comment="审核时间")
+    # 状态
+    is_active = Column(Boolean, default=True, comment="是否有效")
     
-    # 提醒信息
-    reminder_days = Column(Integer, default=30, comment="到期提醒天数")
-    last_reminder_sent = Column(DateTime, comment="最后提醒时间")
-    
-    # 备注信息
-    description = Column(Text, comment="证书描述")
+    # 备注
     notes = Column(Text, comment="备注")
     
     # 时间字段
@@ -51,9 +44,7 @@ class Certificate(Base):
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), comment="更新时间")
     
     # 关系
-    merchant = relationship("Merchant", back_populates="certificates")
-    crew = relationship("CrewInfo", back_populates="certificates")
-    reviewer = relationship("User")
+    verifier = relationship("User")
     
     def __repr__(self):
-        return f"<Certificate(id={self.id}, name='{self.certificate_name}', status='{self.status}')>" 
+        return f"<Certificate(id={self.id}, type='{self.certificate_type}', no='{self.certificate_no}')>" 
