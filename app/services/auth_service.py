@@ -93,7 +93,7 @@ class AuthService:
             access_token=access_token,
             token_type="bearer",
             expires_in=3600,  # 1小时
-            user=UserResponse.from_orm(user)
+            user=UserResponse.model_validate(user)
         )
     
     @staticmethod

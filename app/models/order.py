@@ -89,8 +89,8 @@ class Order(Base):
     refund_processed_at = Column(DateTime, comment="处理退款时间")
     
     # 时间戳
-    created_at = Column(DateTime, default=datetime.utcnow, comment="下单时间")
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="更新时间")
+    created_at = Column(DateTime, default=datetime.now(), comment="下单时间")
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now(), comment="更新时间")
     confirmed_at = Column(DateTime, comment="确认时间")
     completed_at = Column(DateTime, comment="完成时间")
     cancelled_at = Column(DateTime, comment="取消时间")

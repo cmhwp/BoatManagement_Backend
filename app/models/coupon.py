@@ -64,8 +64,8 @@ class Coupon(Base):
     is_public = Column(Boolean, default=True, comment="是否公开（用户可主动领取）")
     
     # 时间戳
-    created_at = Column(DateTime, default=datetime.utcnow, comment="创建时间")
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="更新时间")
+    created_at = Column(DateTime, default=datetime.now(), comment="创建时间")
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now(), comment="更新时间")
     
     # 关联关系
     user_coupons = relationship("UserCoupon", back_populates="coupon")
@@ -90,7 +90,7 @@ class UserCoupon(Base):
     status = Column(Enum(UserCouponStatus), default=UserCouponStatus.AVAILABLE, comment="状态")
     
     # 时间戳
-    obtained_at = Column(DateTime, default=datetime.utcnow, comment="获得时间")
+    obtained_at = Column(DateTime, default=datetime.now(), comment="获得时间")
     expires_at = Column(DateTime, comment="过期时间")
     
     # 关联关系

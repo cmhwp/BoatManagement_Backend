@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, validator
+from pydantic import BaseModel, EmailStr, field_validator, ConfigDict
 from typing import Optional, List
 from datetime import datetime
 from app.models.user import UserRole, UserStatus
@@ -20,13 +20,15 @@ class UserCreate(UserBase):
     """用户创建模型"""
     password: str
     
-    @validator('username')
+    @field_validator('username')
+    @classmethod
     def validate_username(cls, v):
         if len(v) < 3 or len(v) > 20:
             raise ValueError('用户名长度必须在3-20位之间')
         return v
     
-    @validator('password')
+    @field_validator('password')
+    @classmethod
     def validate_password(cls, v):
         if len(v) < 6:
             raise ValueError('密码长度至少为6位')
@@ -52,6 +54,8 @@ class UserLogin(BaseModel):
 
 class UserResponse(BaseModel):
     """用户响应模型"""
+    model_config = ConfigDict(from_attributes=True)
+    
     id: int
     username: str
     email: str
@@ -67,9 +71,6 @@ class UserResponse(BaseModel):
     is_verified: bool
     created_at: datetime
     last_login: Optional[datetime] = None
-    
-    class Config:
-        from_attributes = True
 
 
 class PasswordChange(BaseModel):
@@ -77,7 +78,8 @@ class PasswordChange(BaseModel):
     old_password: str
     new_password: str
     
-    @validator('new_password')
+    @field_validator('new_password')
+    @classmethod
     def validate_new_password(cls, v):
         if len(v) < 6:
             raise ValueError('新密码长度至少为6位')
@@ -93,6 +95,8 @@ class RoleApplicationCreate(BaseModel):
 
 class RoleApplicationResponse(BaseModel):
     """角色申请响应模型"""
+    model_config = ConfigDict(from_attributes=True)
+    
     id: int
     user_id: int
     target_role: UserRole
@@ -103,9 +107,6 @@ class RoleApplicationResponse(BaseModel):
     review_comment: Optional[str] = None
     reviewed_at: Optional[datetime] = None
     created_at: datetime
-    
-    class Config:
-        from_attributes = True
 
 
 class TokenResponse(BaseModel):

@@ -45,7 +45,7 @@ class Payment(Base):
     status = Column(Enum(PaymentStatus), default=PaymentStatus.PENDING, comment="支付状态")
     
     # 时间信息
-    initiated_at = Column(DateTime, default=datetime.utcnow, comment="发起支付时间")
+    initiated_at = Column(DateTime, default=datetime.now(), comment="发起支付时间")
     paid_at = Column(DateTime, comment="支付完成时间")
     failed_at = Column(DateTime, comment="支付失败时间")
     
@@ -63,8 +63,8 @@ class Payment(Base):
     failure_reason = Column(Text, comment="失败原因")
     
     # 时间戳
-    created_at = Column(DateTime, default=datetime.utcnow, comment="创建时间")
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="更新时间")
+    created_at = Column(DateTime, default=datetime.now(), comment="创建时间")
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now(), comment="更新时间")
     
     # 关联关系
     order = relationship("Order", back_populates="payments")

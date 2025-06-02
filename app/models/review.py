@@ -43,8 +43,8 @@ class Review(Base):
     reply_count = Column(Integer, default=0, comment="回复数")
     
     # 时间戳
-    created_at = Column(DateTime, default=datetime.utcnow, comment="评价时间")
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="更新时间")
+    created_at = Column(DateTime, default=datetime.now(), comment="评价时间")
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now(), comment="更新时间")
     
     # 关联关系
     user = relationship("User", back_populates="reviews")

@@ -62,8 +62,8 @@ class SystemConfig(Base):
     modification_reason = Column(Text, comment="修改原因")
     
     # 时间戳
-    created_at = Column(DateTime, default=datetime.utcnow, comment="创建时间")
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="更新时间")
+    created_at = Column(DateTime, default=datetime.now(), comment="创建时间")
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now(), comment="更新时间")
 
     def __repr__(self):
         return f"<SystemConfig(id={self.id}, key='{self.key}', type='{self.config_type}')>" 

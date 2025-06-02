@@ -61,8 +61,8 @@ class Merchant(Base):
     
     # 时间戳
     approved_at = Column(DateTime, comment="审核通过时间")
-    created_at = Column(DateTime, default=datetime.utcnow, comment="创建时间")
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="更新时间")
+    created_at = Column(DateTime, default=datetime.now(), comment="创建时间")
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now(), comment="更新时间")
     
     # 关联关系
     user = relationship("User", back_populates="merchant")

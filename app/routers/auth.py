@@ -38,7 +38,7 @@ async def login(
         result = AuthService.login(db, user_login)
         return success_response(
             message="登录成功",
-            data=result.dict()
+            data=result.model_dump()
         )
     except HTTPException as e:
         return error_response(
@@ -99,7 +99,7 @@ async def get_current_user_info(
     from app.schemas.user import UserResponse
     return success_response(
         message="获取用户信息成功",
-        data=UserResponse.from_orm(current_user).dict()
+        data=UserResponse.model_validate(current_user).model_dump()
     )
 
 

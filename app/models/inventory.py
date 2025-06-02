@@ -37,7 +37,7 @@ class InventoryLog(Base):
     notes = Column(Text, comment="备注")
     
     # 时间戳
-    created_at = Column(DateTime, default=datetime.utcnow, comment="操作时间")
+    created_at = Column(DateTime, default=datetime.now(), comment="操作时间")
     
     # 关联关系
     product = relationship("AgriculturalProduct", back_populates="inventory_logs")

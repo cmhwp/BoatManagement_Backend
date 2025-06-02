@@ -54,8 +54,8 @@ class User(Base):
     is_verified = Column(Boolean, default=False, comment="是否已验证")
     
     # 时间戳
-    created_at = Column(DateTime, default=datetime.utcnow, comment="创建时间")
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="更新时间")
+    created_at = Column(DateTime, default=datetime.now(), comment="创建时间")
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now(), comment="更新时间")
     last_login = Column(DateTime, comment="最后登录时间")
     
     # 关联关系
@@ -91,8 +91,8 @@ class RoleApplication(Base):
     reviewed_at = Column(DateTime, comment="审核时间")
     
     # 时间戳
-    created_at = Column(DateTime, default=datetime.utcnow, comment="申请时间")
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="更新时间")
+    created_at = Column(DateTime, default=datetime.now(), comment="申请时间")
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now(), comment="更新时间")
     
     # 关联关系
     user = relationship("User", back_populates="role_applications", foreign_keys=[user_id])
