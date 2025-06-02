@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config.settings import settings
-from app.config.database import engine
-from app.models import user  # 导入模型以便创建表
+from app.config.database import engine, Base
+from app.models import *  # 导入所有模型以便创建表
 from app.routers import auth, users
 
 # 创建数据库表
-user.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 # 创建FastAPI应用实例
 app = FastAPI(

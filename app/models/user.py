@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, Enum as SQLEnum
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 from app.config.database import Base
 from .enums import UserRole, UserStatus
 
@@ -30,6 +31,15 @@ class User(Base):
     created_at = Column(DateTime, server_default=func.now(), comment="创建时间")
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), comment="更新时间")
     last_login_at = Column(DateTime, comment="最后登录时间")
+    
+    # 关系定义
+    role_applications = relationship("RoleApplication", foreign_keys="[RoleApplication.user_id]", back_populates="applicant")
+    merchant_info = relationship("Merchant", back_populates="user", uselist=False)
+    crew_info = relationship("CrewInfo", back_populates="user", uselist=False)
+    orders = relationship("Order", back_populates="user")
+    reviews = relationship("Review", back_populates="user")
+    notifications = relationship("Notification", foreign_keys="[Notification.user_id]", back_populates="user")
+    user_coupons = relationship("UserCoupon", back_populates="user")
     
     def __repr__(self):
         return f"<User(id={self.id}, username='{self.username}', role='{self.role}')>" 
