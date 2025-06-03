@@ -35,9 +35,6 @@ class Service(Base):
     
     # 状态信息
     status = Column(SQLEnum(ServiceStatus), default=ServiceStatus.ACTIVE, comment="服务状态")
-    is_seasonal = Column(Boolean, default=False, comment="是否季节性服务")
-    season_start = Column(DateTime, comment="季节开始时间")
-    season_end = Column(DateTime, comment="季节结束时间")
     
     # 预订信息
     advance_booking_days = Column(Integer, default=1, comment="提前预订天数")

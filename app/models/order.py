@@ -27,7 +27,6 @@ class Order(Base):
     # 金额信息
     subtotal = Column(Numeric(12, 2), nullable=False, comment="小计金额")
     discount_amount = Column(Numeric(10, 2), default=0, comment="优惠金额")
-    shipping_fee = Column(Numeric(8, 2), default=0, comment="运费")
     total_amount = Column(Numeric(12, 2), nullable=False, comment="总金额")
     
     # 服务时间信息（适用于服务订单）
@@ -35,10 +34,9 @@ class Order(Base):
     service_time = Column(String(20), comment="服务时间段")
     participants = Column(Integer, comment="参与人数")
     
-    # 收货信息（适用于产品订单）
-    delivery_address = Column(Text, comment="收货地址")
-    delivery_phone = Column(String(20), comment="收货电话")
-    delivery_name = Column(String(50), comment="收货人姓名")
+    # 联系信息
+    contact_name = Column(String(50), comment="联系人姓名")
+    contact_phone = Column(String(20), comment="联系电话")
     
     # 特殊需求
     special_requirements = Column(Text, comment="特殊需求")

@@ -41,6 +41,9 @@ class UserUpdate(BaseModel):
     gender: Optional[str] = None
     address: Optional[str] = None
     avatar: Optional[str] = None
+    role: Optional[UserRole] = None
+    status: Optional[UserStatus] = None
+    is_verified: Optional[bool] = None
 
 
 class UserResponse(UserBase):

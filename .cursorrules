@@ -16,64 +16,100 @@
 - [x] 应用配置管理 (app/config/settings.py)
 - [x] 数据库连接配置 (app/config/database.py)
 - [x] 用户角色枚举定义 (app/models/enums.py)
+- [x] 数据库模型优化 (精简15个字段，删除2个复杂模型)
 - [x] 用户数据模型创建 (app/models/user.py)
-- [x] Pydantic模式定义 (app/schemas/user.py)
+- [x] 商家数据模型 (app/models/merchant.py)
+- [x] 船员数据模型 (app/models/crew_info.py)
+- [x] 船艇数据模型 (app/models/boat.py)
+- [x] Pydantic模式定义 (app/schemas/)
+  - [x] 用户模式 (app/schemas/user.py)
+  - [x] 商家模式 (app/schemas/merchant.py)
+  - [x] 船员模式 (app/schemas/crew.py)
+  - [x] 船艇模式 (app/schemas/boat.py)
+  - [x] 通用模式 (app/schemas/common.py)
 - [x] JWT安全工具实现 (app/utils/security.py)
-- [x] 用户CRUD操作 (app/crud/user.py)
 - [x] 认证依赖项 (app/utils/deps.py)
-- [x] 用户认证API路由 (app/routers/auth.py)
-- [x] 用户管理API路由 (app/routers/users.py)
+- [x] CRUD操作实现
+  - [x] 用户CRUD (app/crud/user.py)
+  - [x] 商家CRUD (app/crud/merchant.py)
+  - [x] 船员CRUD (app/crud/crew.py)
+  - [x] 船艇CRUD (app/crud/boat.py)
+- [x] API路由完整实现
+  - [x] 用户认证API (app/routers/auth.py)
+  - [x] 用户管理API (app/routers/users.py)
+  - [x] 商家管理API (app/routers/merchants.py)
+  - [x] 船员管理API (app/routers/crews.py)
+  - [x] 船艇管理API (app/routers/boats.py)
+  - [x] 管理员功能API (app/routers/admin.py)
 - [x] FastAPI主应用配置 (main.py)
-- [x] 项目文档 (README.md)
+- [x] 完整API文档 (API_DOCUMENTATION.md)
+- [x] 项目文档更新 (README.md)
 
 ## 当前正在进行的操作 🔄
-- [ ] 测试和验证基础鉴权功能
+- [ ] 测试和验证完整API功能
 - [ ] 数据库初始化和测试数据创建
 
-## 待完成的核心功能 📋
+## 已完成的核心功能 ✅
+
+### 1. 基础架构 ✅
+- [x] 环境变量配置支持
+- [x] 角色权限管理系统
+- [x] JWT认证授权
+- [x] API响应标准化
+- [x] 分页查询支持
+- [x] 错误处理机制
+
+### 2. 用户系统 ✅
+- [x] 用户注册登录
+- [x] 用户信息管理
+- [x] 用户状态管理
+- [x] 角色权限控制
+- [x] 用户验证功能
+
+### 3. 商家管理系统 ✅
+- [x] 商家信息管理
+- [x] 商家认证功能
+- [x] 商家状态控制
+- [x] 商家列表查询
+- [x] 商家数据统计
+
+### 4. 船员管理系统 ✅
+- [x] 船员信息管理
+- [x] 船员状态管理
+- [x] 船员评分系统
+- [x] 船员资质管理
+- [x] 可用船员查询
+
+### 5. 船艇管理系统 ✅
+- [x] 船艇基础信息管理
+- [x] 船艇类型管理
+- [x] 船艇状态管理
+- [x] 船艇位置追踪
+- [x] 可用船艇查询
+
+### 6. 管理员功能 ✅
+- [x] 系统仪表板
+- [x] 用户管理
+- [x] 角色权限管理
+- [x] 数据统计分析
+- [x] 系统状态监控
+
+## 待完成的功能 📋
 
 ### 1. 基础架构优化 (优先级：高)
-- [ ] 环境变量配置文件 (.env)
 - [ ] 日志系统配置
 - [ ] 异常处理中间件
 - [ ] 数据库迁移脚本 (Alembic)
-- [ ] API响应标准化
+- [ ] 单元测试编写
 
-### 2. 用户系统增强 (优先级：高)
-- [ ] 邮箱验证功能
-- [ ] 密码重置功能
-- [ ] 用户状态管理
-- [ ] 用户列表查询（分页）
-- [ ] 用户头像上传
-
-### 3. 船艇管理系统 (优先级：中)
-- [ ] 船艇基础信息模型
-- [ ] 船艇类型管理
-- [ ] 船艇状态管理
-- [ ] 船艇位置追踪
-- [ ] 船艇维护记录
-- [ ] 船艇预订系统
-
-### 4. 旅游服务系统 (优先级：中)
-- [ ] 旅游路线管理
-- [ ] 景点信息管理
-- [ ] 服务套餐管理
+### 2. 业务功能扩展 (优先级：中)
+- [ ] 旅游服务系统
+- [ ] 农业观光系统
+- [ ] 文化体验系统
 - [ ] 预订系统
 - [ ] 支付系统集成
 
-### 5. 农业观光系统 (优先级：中)
-- [ ] 农业基地信息管理
-- [ ] 季节性农产品展示
-- [ ] 农业体验活动管理
-- [ ] 农产品销售系统
-
-### 6. 文化体验系统 (优先级：中)
-- [ ] 文化活动管理
-- [ ] 传统文化展示
-- [ ] 文化体验预订
-- [ ] 文化导览系统
-
-### 7. 高级功能 (优先级：低)
+### 3. 高级功能 (优先级：低)
 - [ ] 实时通信系统
 - [ ] 图片上传和管理
 - [ ] 评价和评论系统
@@ -100,22 +136,66 @@
 
 ## 当前可用的API接口
 
-### 认证相关 (/api/v1/auth)
+### 认证相关 (/api/v1/auth) ✅
 - **POST /register** - 用户注册
 - **POST /login** - 用户登录
 - **GET /me** - 获取当前用户信息
 - **POST /logout** - 用户登出
 
-### 用户管理 (/api/v1/users)
+### 用户管理 (/api/v1/users) ✅
 - **PUT /me** - 更新当前用户信息
-- **GET /{user_id}** - 获取用户详情 (管理员/商家权限)
-- **PUT /{user_id}** - 更新用户信息 (管理员权限)
+- **GET /{user_id}** - 获取用户详情
+- **PUT /{user_id}** - 更新用户信息
+
+### 商家管理 (/api/v1/merchants) ✅
+- **POST /** - 创建商家信息
+- **GET /** - 获取商家列表
+- **GET /me** - 获取我的商家信息
+- **GET /{merchant_id}** - 获取商家详情
+- **PUT /me** - 更新我的商家信息
+- **PUT /{merchant_id}** - 更新商家信息
+- **POST /{merchant_id}/verify** - 商家认证
+- **POST /{merchant_id}/activate** - 激活/停用商家
+- **DELETE /{merchant_id}** - 删除商家
+
+### 船员管理 (/api/v1/crews) ✅
+- **POST /** - 创建船员信息
+- **GET /** - 获取船员列表
+- **GET /available** - 获取可用船员
+- **GET /me** - 获取我的船员信息
+- **GET /{crew_id}** - 获取船员详情
+- **PUT /me** - 更新我的船员信息
+- **PUT /{crew_id}** - 更新船员信息
+- **PUT /{crew_id}/status** - 更新船员状态
+- **PUT /{crew_id}/rating** - 船员评分
+- **DELETE /{crew_id}** - 删除船员
+
+### 船艇管理 (/api/v1/boats) ✅
+- **POST /** - 创建船艇信息
+- **GET /** - 获取船艇列表
+- **GET /available** - 获取可用船艇
+- **GET /my** - 获取我的船艇
+- **GET /{boat_id}** - 获取船艇详情
+- **PUT /{boat_id}** - 更新船艇信息
+- **PUT /{boat_id}/status** - 更新船艇状态
+- **PUT /{boat_id}/location** - 更新船艇位置
+- **DELETE /{boat_id}** - 删除船艇
+
+### 管理员功能 (/api/v1/admin) ✅
+- **GET /dashboard** - 仪表板数据
+- **GET /users** - 所有用户列表
+- **GET /users/{user_id}** - 用户详情
+- **PUT /users/{user_id}** - 更新用户信息
+- **PUT /users/{user_id}/status** - 更新用户状态
+- **PUT /users/{user_id}/role** - 更新用户角色
+- **PUT /users/{user_id}/verify** - 验证用户
+- **GET /system/stats** - 系统统计
 
 ## 下一步计划
-1. 测试基础鉴权功能是否正常工作
+1. 测试完整API功能是否正常工作
 2. 创建数据库迁移脚本
 3. 实现日志系统和异常处理
-4. 开发船艇管理模块
+4. 开发旅游服务模块
 5. 实现文件上传功能
 
 ## 测试指南
@@ -123,4 +203,6 @@
 2. 安装项目依赖: `pip install -r requirements.txt`
 3. 启动应用: `python main.py`
 4. 访问API文档: http://localhost:8000/docs
-5. 测试用户注册和登录功能 
+5. 测试用户注册和登录功能
+6. 测试各角色的API权限控制
+7. 验证CRUD操作的完整性 

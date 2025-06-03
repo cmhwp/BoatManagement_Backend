@@ -25,27 +25,9 @@ class AgriculturalProduct(Base):
     # 价格库存
     price = Column(Numeric(10, 2), nullable=False, comment="单价")
     stock_quantity = Column(Integer, default=0, comment="库存数量")
-    min_order_quantity = Column(Integer, default=1, comment="最小起订量")
     
-    # 质量信息
-    quality_grade = Column(String(20), comment="质量等级")
-    organic_certified = Column(Boolean, default=False, comment="是否有机认证")
-    certification_no = Column(String(50), comment="认证编号")
-    
-    # 时间信息
-    harvest_date = Column(DateTime, comment="收获时间")
+    # 基本信息
     shelf_life = Column(Integer, comment="保质期(天)")
-    storage_requirements = Column(Text, comment="储存要求")
-    
-    # 销售信息
-    is_available = Column(Boolean, default=True, comment="是否可售")
-    is_seasonal = Column(Boolean, default=False, comment="是否季节性产品")
-    season_start = Column(DateTime, comment="销售季节开始")
-    season_end = Column(DateTime, comment="销售季节结束")
-    
-    # 营养信息
-    nutrition_info = Column(Text, comment="营养成分(JSON格式)")
-    calories_per_100g = Column(Numeric(8, 2), comment="每100g热量")
     
     # 评价信息
     rating = Column(Numeric(3, 2), default=0.0, comment="产品评分")

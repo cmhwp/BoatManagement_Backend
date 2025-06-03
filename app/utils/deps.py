@@ -55,8 +55,8 @@ def require_roles(allowed_roles: List[UserRole]):
     return role_checker
 
 
-# 预定义的角色依赖项
-require_admin = Depends(require_roles([UserRole.ADMIN]))
-require_merchant = Depends(require_roles([UserRole.ADMIN, UserRole.MERCHANT]))
-require_crew = Depends(require_roles([UserRole.ADMIN, UserRole.CREW]))
-require_user = Depends(require_roles([UserRole.ADMIN, UserRole.MERCHANT, UserRole.USER, UserRole.CREW])) 
+# 预定义的角色依赖项函数
+require_admin = require_roles([UserRole.ADMIN])
+require_merchant = require_roles([UserRole.ADMIN, UserRole.MERCHANT])
+require_crew = require_roles([UserRole.ADMIN, UserRole.CREW])
+require_user = require_roles([UserRole.ADMIN, UserRole.MERCHANT, UserRole.USER, UserRole.CREW]) 

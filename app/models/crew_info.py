@@ -20,11 +20,6 @@ class CrewInfo(Base):
     # 专业能力
     years_of_experience = Column(Integer, default=0, comment="从业年限")
     specialties = Column(Text, comment="专业技能(JSON格式)")
-    languages = Column(String(200), comment="语言能力")
-    
-    # 健康状况
-    health_certificate = Column(String(255), comment="健康证明文件URL")
-    health_expiry = Column(DateTime, comment="健康证明到期时间")
     
     # 工作状态
     is_available = Column(Boolean, default=True, comment="是否可用")

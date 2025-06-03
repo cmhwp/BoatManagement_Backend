@@ -20,8 +20,7 @@ class Coupon(Base):
     # 优惠信息
     discount_value = Column(Numeric(10, 2), comment="优惠金额/折扣值")
     min_amount = Column(Numeric(10, 2), comment="最低消费金额")
-    max_discount = Column(Numeric(10, 2), comment="最大优惠金额")
-    
+     
     # 使用限制
     total_quantity = Column(Integer, comment="发放总量")
     used_quantity = Column(Integer, default=0, comment="已使用数量")
@@ -33,10 +32,6 @@ class Coupon(Base):
     
     # 状态
     is_active = Column(Boolean, default=True, comment="是否激活")
-    
-    # 适用范围
-    applicable_services = Column(Text, comment="适用服务IDs(JSON格式)")
-    applicable_products = Column(Text, comment="适用产品IDs(JSON格式)")
     
     # 描述
     description = Column(Text, comment="使用说明")

@@ -19,7 +19,6 @@ class User(Base):
     real_name = Column(String(50), comment="真实姓名")
     avatar = Column(String(255), comment="头像URL")
     gender = Column(String(10), comment="性别")
-    birth_date = Column(DateTime, comment="出生日期")
     address = Column(Text, comment="地址")
     
     # 系统字段

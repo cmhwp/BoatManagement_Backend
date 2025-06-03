@@ -1,9 +1,11 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 from app.models.user import User
+from app.models.enums import UserRole, UserStatus
 from app.schemas.user import UserCreate, UserUpdate
+from app.schemas.common import PaginationParams
 from app.utils.security import get_password_hash, verify_password
 
 
@@ -36,6 +38,46 @@ def get_user_by_login_credential(db: Session, credential: str) -> Optional[User]
             User.phone == credential
         )
     ).first()
+
+
+def get_users(
+    db: Session,
+    pagination: PaginationParams,
+    role: Optional[UserRole] = None,
+    status: Optional[UserStatus] = None,
+    is_verified: Optional[bool] = None,
+    search: Optional[str] = None
+) -> tuple[List[User], int]:
+    """获取用户列表"""
+    query = db.query(User)
+    
+    # 应用过滤条件
+    if role:
+        query = query.filter(User.role == role)
+    
+    if status:
+        query = query.filter(User.status == status)
+    
+    if is_verified is not None:
+        query = query.filter(User.is_verified == is_verified)
+    
+    if search:
+        query = query.filter(
+            or_(
+                User.username.contains(search),
+                User.email.contains(search),
+                User.real_name.contains(search),
+                User.phone.contains(search)
+            )
+        )
+    
+    # 获取总数
+    total = query.count()
+    
+    # 应用分页
+    users = query.offset(pagination.get_offset()).limit(pagination.get_limit()).all()
+    
+    return users, total
 
 
 def create_user(db: Session, user: UserCreate) -> User:
@@ -101,4 +143,15 @@ def update_last_login(db: Session, user_id: int) -> None:
     db_user = get_user_by_id(db, user_id)
     if db_user:
         db_user.last_login_at = datetime.utcnow()
-        db.commit() 
+        db.commit()
+
+
+def delete_user(db: Session, user_id: int) -> bool:
+    """删除用户"""
+    db_user = get_user_by_id(db, user_id)
+    if not db_user:
+        return False
+    
+    db.delete(db_user)
+    db.commit()
+    return True 

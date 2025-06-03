@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config.settings import settings
-from app.config.database import engine,Base
+from app.config.database import engine, Base
 from app.models import *  # 导入所有模型以便创建表
-from app.routers import auth, users
+from app.routers import auth, users, merchants, crews, boats, admin
 
 # 创建数据库表
 Base.metadata.create_all(bind=engine)
@@ -27,8 +27,12 @@ app.add_middleware(
 )
 
 # 注册路由
-app.include_router(auth.router, prefix="/api/v1")
-app.include_router(users.router, prefix="/api/v1")
+app.include_router(auth.router)  # 认证路由
+app.include_router(users.router)  # 用户路由
+app.include_router(merchants.router)  # 商家路由
+app.include_router(crews.router)  # 船员路由
+app.include_router(boats.router)  # 船艇路由
+app.include_router(admin.router)  # 管理员路由
 
 
 @app.get("/", tags=["根路径"])
@@ -38,7 +42,14 @@ async def root():
         "message": "欢迎使用绿色智能船艇农文旅平台API",
         "version": settings.app_version,
         "docs": "/docs",
-        "redoc": "/redoc"
+        "redoc": "/redoc",
+        "features": [
+            "用户认证与授权",
+            "商家管理",
+            "船员管理", 
+            "船艇管理",
+            "管理员功能"
+        ]
     }
 
 
@@ -46,6 +57,24 @@ async def root():
 async def health_check():
     """健康检查接口"""
     return {"status": "healthy", "service": settings.app_name}
+
+
+@app.get("/api/info", tags=["系统"])
+async def api_info():
+    """API信息接口"""
+    return {
+        "api_version": "v1",
+        "service": settings.app_name,
+        "environment": "development" if settings.debug else "production",
+        "available_endpoints": {
+            "auth": "/api/v1/auth - 用户认证",
+            "users": "/api/v1/users - 用户管理",
+            "merchants": "/api/v1/merchants - 商家管理",
+            "crews": "/api/v1/crews - 船员管理",
+            "boats": "/api/v1/boats - 船艇管理",
+            "admin": "/api/v1/admin - 管理员功能"
+        }
+    }
 
 
 if __name__ == "__main__":

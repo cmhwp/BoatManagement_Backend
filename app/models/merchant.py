@@ -23,11 +23,6 @@ class Merchant(Base):
     contact_phone = Column(String(20), comment="联系电话")
     contact_email = Column(String(100), comment="联系邮箱")
     
-    # 经营信息
-    business_scope = Column(Text, comment="经营范围")
-    establishment_date = Column(DateTime, comment="成立日期")
-    registered_capital = Column(Numeric(15, 2), comment="注册资本")
-    
     # 认证状态
     is_verified = Column(Boolean, default=False, comment="是否已认证")
     verification_date = Column(DateTime, comment="认证时间")

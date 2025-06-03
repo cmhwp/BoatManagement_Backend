@@ -22,15 +22,11 @@ class Boat(Base):
     length = Column(Numeric(8, 2), comment="船长(米)")
     width = Column(Numeric(8, 2), comment="船宽(米)")
     passenger_capacity = Column(Integer, comment="载客量")
-    cargo_capacity = Column(Numeric(10, 2), comment="载货量(吨)")
     engine_power = Column(String(50), comment="发动机功率")
-    fuel_type = Column(String(20), comment="燃料类型")
     
     # 状态信息
     status = Column(SQLEnum(BoatStatus), default=BoatStatus.AVAILABLE, comment="船艇状态")
     current_location = Column(String(200), comment="当前位置")
-    last_maintenance = Column(DateTime, comment="上次维护时间")
-    next_maintenance = Column(DateTime, comment="下次维护时间")
     
     # 安全信息
     safety_equipment = Column(Text, comment="安全设备清单(JSON格式)")
