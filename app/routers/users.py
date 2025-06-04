@@ -9,7 +9,7 @@ from app.utils.deps import get_current_active_user, require_roles
 from app.models.user import User
 from app.models.enums import UserRole
 
-router = APIRouter(prefix="/users", tags=["用户管理"])
+router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.put("/me", response_model=ApiResponse[UserResponse], summary="更新当前用户信息")

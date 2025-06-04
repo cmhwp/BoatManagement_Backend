@@ -12,7 +12,7 @@ from app.utils.deps import get_current_active_user
 from app.models.user import User
 from app.models.enums import UserStatus
 
-router = APIRouter(prefix="/api/v1/auth", tags=["认证"])
+router = APIRouter(prefix="/api/v1/auth", tags=["auth"])
 
 
 @router.post("/register", response_model=ApiResponse[UserResponse], summary="用户注册")

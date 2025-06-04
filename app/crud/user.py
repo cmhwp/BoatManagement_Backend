@@ -142,7 +142,7 @@ def update_last_login(db: Session, user_id: int) -> None:
     """更新用户最后登录时间"""
     db_user = get_user_by_id(db, user_id)
     if db_user:
-        db_user.last_login_at = datetime.utcnow()
+        db_user.last_login_at = datetime.now()
         db.commit()
 
 
