@@ -6,7 +6,7 @@ from app.config.database import get_db
 from app.utils.security import verify_token
 from app.crud.user import get_user_by_id
 from app.models.user import User
-from app.models.enums import UserRole
+from app.models.enums import UserRole, UserStatus
 
 # HTTP Bearer 认证方案
 security = HTTPBearer()
@@ -30,6 +30,7 @@ async def get_current_user(
         raise credentials_exception
     
     user = get_user_by_id(db, user_id=token_data.user_id)
+    
     if user is None:
         raise credentials_exception
     
@@ -38,7 +39,7 @@ async def get_current_user(
 
 async def get_current_active_user(current_user: User = Depends(get_current_user)) -> User:
     """获取当前活跃用户依赖项"""
-    if current_user.status != "active":
+    if current_user.status != UserStatus.ACTIVE:
         raise HTTPException(status_code=400, detail="用户账号已被停用")
     return current_user
 

@@ -10,6 +10,7 @@ from app.crud.user import create_user, authenticate_user, update_last_login
 from app.utils.security import create_access_token
 from app.utils.deps import get_current_active_user
 from app.models.user import User
+from app.models.enums import UserStatus
 
 router = APIRouter(prefix="/api/v1/auth", tags=["认证"])
 
@@ -63,7 +64,7 @@ async def login(user_login: UserLogin, db: Session = Depends(get_db)):
         )
     
     # 检查用户状态
-    if user.status != "active":
+    if user.status != UserStatus.ACTIVE:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="用户账号已被停用"
@@ -72,7 +73,7 @@ async def login(user_login: UserLogin, db: Session = Depends(get_db)):
     # 创建访问令牌
     access_token_expires = timedelta(minutes=settings.access_token_expire_minutes)
     access_token = create_access_token(
-        data={"sub": user.id, "username": user.username},
+        data={"sub": str(user.id), "username": user.username},
         expires_delta=access_token_expires
     )
     

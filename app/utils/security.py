@@ -36,13 +36,20 @@ def verify_token(token: str) -> Optional[TokenData]:
     """验证令牌"""
     try:
         payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
-        user_id: int = payload.get("sub")
+        
+        user_id_str: str = payload.get("sub")
         username: str = payload.get("username")
         
-        if user_id is None:
+        if user_id_str is None:
+            return None
+        
+        # 将字符串转换为整数
+        try:
+            user_id = int(user_id_str)
+        except (ValueError, TypeError):
             return None
         
         token_data = TokenData(user_id=user_id, username=username)
         return token_data
-    except JWTError:
+    except JWTError as e:
         return None 
