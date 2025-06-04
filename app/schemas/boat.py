@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 from typing import Optional
 from datetime import datetime
 from decimal import Decimal
@@ -29,13 +29,15 @@ class BoatCreate(BoatBase):
     """船艇创建模式"""
     merchant_id: int
     
-    @validator('name')
+    @field_validator('name')
+    @classmethod
     def validate_name(cls, v):
         if len(v) < 2:
             raise ValueError('船艇名称不能少于2个字符')
         return v
     
-    @validator('registration_no')
+    @field_validator('registration_no')
+    @classmethod
     def validate_registration_no(cls, v):
         if len(v) < 5:
             raise ValueError('注册编号格式不正确')

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, validator
+from pydantic import BaseModel, EmailStr, field_validator
 from typing import Optional
 from datetime import datetime
 
@@ -19,13 +19,15 @@ class MerchantCreate(MerchantBase):
     """商家创建模式"""
     user_id: int
     
-    @validator('company_name')
+    @field_validator('company_name')
+    @classmethod
     def validate_company_name(cls, v):
         if len(v) < 2:
             raise ValueError('公司名称不能少于2个字符')
         return v
     
-    @validator('business_license_no')
+    @field_validator('business_license_no')
+    @classmethod
     def validate_business_license_no(cls, v):
         if len(v) < 10:
             raise ValueError('营业执照号格式不正确')

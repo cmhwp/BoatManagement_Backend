@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from app.config.database import get_db
 from app.schemas.user import UserUpdate, UserResponse
+from app.schemas.common import PaginatedResponse, PaginationParams, ApiResponse, MessageResponse
 from app.crud.user import get_user_by_id, update_user
 from app.utils.deps import get_current_active_user, require_roles
 from app.models.user import User
@@ -11,7 +12,7 @@ from app.models.enums import UserRole
 router = APIRouter(prefix="/users", tags=["用户管理"])
 
 
-@router.put("/me", response_model=UserResponse, summary="更新当前用户信息")
+@router.put("/me", response_model=ApiResponse[UserResponse], summary="更新当前用户信息")
 async def update_current_user(
     user_update: UserUpdate,
     current_user: User = Depends(get_current_active_user),
@@ -34,10 +35,13 @@ async def update_current_user(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="用户未找到"
         )
-    return UserResponse.from_orm(updated_user)
+    return ApiResponse.success_response(
+        data=UserResponse.model_validate(updated_user),
+        message="用户信息更新成功"
+    )
 
 
-@router.get("/{user_id}", response_model=UserResponse, summary="获取用户详情")
+@router.get("/{user_id}", response_model=ApiResponse[UserResponse], summary="获取用户详情")
 async def get_user_detail(
     user_id: int,
     current_user: User = Depends(require_roles([UserRole.ADMIN, UserRole.MERCHANT])),
@@ -54,10 +58,13 @@ async def get_user_detail(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="用户未找到"
         )
-    return UserResponse.from_orm(user)
+    return ApiResponse.success_response(
+        data=UserResponse.model_validate(user),
+        message="获取用户信息成功"
+    )
 
 
-@router.put("/{user_id}", response_model=UserResponse, summary="更新用户信息")
+@router.put("/{user_id}", response_model=ApiResponse[UserResponse], summary="更新用户信息")
 async def update_user_info(
     user_id: int,
     user_update: UserUpdate,
@@ -75,4 +82,7 @@ async def update_user_info(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="用户未找到"
         )
-    return UserResponse.from_orm(updated_user) 
+    return ApiResponse.success_response(
+        data=UserResponse.model_validate(updated_user),
+        message="用户信息更新成功"
+    ) 

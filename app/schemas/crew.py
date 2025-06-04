@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 from typing import Optional, List
 from datetime import datetime
 
@@ -19,13 +19,15 @@ class CrewCreate(CrewBase):
     """船员创建模式"""
     user_id: int
     
-    @validator('id_card_no')
+    @field_validator('id_card_no')
+    @classmethod
     def validate_id_card_no(cls, v):
         if len(v) != 18:
             raise ValueError('身份证号必须为18位')
         return v
     
-    @validator('years_of_experience')
+    @field_validator('years_of_experience')
+    @classmethod
     def validate_years_of_experience(cls, v):
         if v < 0:
             raise ValueError('从业年限不能为负数')
