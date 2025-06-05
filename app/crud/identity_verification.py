@@ -102,15 +102,15 @@ class CRUDIdentityVerification:
         # 更新审核信息
         db_obj.status = obj_in.status
         db_obj.reviewer_id = reviewer_id
-        db_obj.reviewed_at = datetime.utcnow()
+        db_obj.reviewed_at = datetime.now()
         
         if obj_in.status == VerificationStatus.APPROVED:
-            db_obj.verified_at = datetime.utcnow()
+            db_obj.verified_at = datetime.now()
             # 设置认证有效期（默认3年）
             if obj_in.expires_at:
                 db_obj.expires_at = obj_in.expires_at
             else:
-                db_obj.expires_at = datetime.utcnow() + timedelta(days=365*3)
+                db_obj.expires_at = datetime.now() + timedelta(days=365*3)
             
             # 更新用户的实名认证状态
             from app.models.user import User
@@ -136,7 +136,7 @@ class CRUDIdentityVerification:
         return db.query(IdentityVerification).filter(
             and_(
                 IdentityVerification.status == VerificationStatus.APPROVED,
-                IdentityVerification.expires_at < datetime.utcnow()
+                IdentityVerification.expires_at < datetime.now()
             )
         ).all()
 
@@ -147,7 +147,7 @@ class CRUDIdentityVerification:
         ).update(
             {
                 IdentityVerification.status: VerificationStatus.EXPIRED,
-                IdentityVerification.updated_at: datetime.utcnow()
+                IdentityVerification.updated_at: datetime.now()
             },
             synchronize_session=False
         )

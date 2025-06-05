@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, Field,field_validator
+from pydantic import BaseModel, Field, field_validator, ValidationInfo
 from app.models.enums import IdentityType, VerificationStatus
 
 
@@ -11,16 +11,16 @@ class IdentityVerificationCreate(BaseModel):
     identity_number: str = Field(..., max_length=30, description="证件号码")
     front_image: Optional[str] = Field(None, description="证件正面照片URL")
     back_image: Optional[str] = Field(None, description="证件背面照片URL")
-    hold_image: Optional[str] = Field(None, description="手持证件照片URL")
 
     @field_validator('identity_number')
     @classmethod
-    def validate_identity_number(cls, v, values):
+    def validate_identity_number(cls, v: str, info: ValidationInfo):
         """验证证件号码格式"""
         if not v or not v.strip():
             raise ValueError("证件号码不能为空")
         
-        identity_type = values.get('identity_type')
+        # 从 info.data 获取其他字段的值
+        identity_type = info.data.get('identity_type') if info.data else None
         if identity_type == IdentityType.ID_CARD:
             # 简单的身份证号码验证
             if len(v) not in [15, 18]:
@@ -34,7 +34,7 @@ class IdentityVerificationCreate(BaseModel):
 
     @field_validator('real_name')
     @classmethod
-    def validate_real_name(cls, v):
+    def validate_real_name(cls, v: str):
         """验证真实姓名"""
         if not v or not v.strip():
             raise ValueError("真实姓名不能为空")
@@ -58,9 +58,10 @@ class IdentityVerificationReview(BaseModel):
 
     @field_validator('reject_reason')
     @classmethod
-    def validate_reject_reason(cls, v, values):
+    def validate_reject_reason(cls, v: Optional[str], info: ValidationInfo):
         """验证拒绝原因"""
-        status = values.get('status')
+        # 从 info.data 获取其他字段的值
+        status = info.data.get('status') if info.data else None
         if status == VerificationStatus.REJECTED and not v:
             raise ValueError("拒绝时必须提供拒绝原因")
         return v
