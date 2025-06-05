@@ -12,6 +12,7 @@ from .schedule import Schedule
 from .review import Review
 from .role_application import RoleApplication
 from .notification import Notification
+from .identity_verification import IdentityVerification
 
 __all__ = [
     "User",
@@ -29,4 +30,5 @@ __all__ = [
     "Review",
     "RoleApplication",
     "Notification",
+    "IdentityVerification",
 ] 

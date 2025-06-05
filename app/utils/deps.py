@@ -56,6 +56,26 @@ def require_roles(allowed_roles: List[UserRole]):
     return role_checker
 
 
+async def get_current_verified_user(current_user: User = Depends(get_current_active_user)) -> User:
+    """获取当前已实名认证用户依赖项"""
+    if not current_user.is_verified:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="需要完成实名认证才能使用此功能"
+        )
+    return current_user
+
+
+async def get_current_admin_user(current_user: User = Depends(get_current_active_user)) -> User:
+    """获取当前管理员用户依赖项"""
+    if current_user.role != UserRole.ADMIN:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="需要管理员权限"
+        )
+    return current_user
+
+
 # 预定义的角色依赖项函数
 require_admin = require_roles([UserRole.ADMIN])
 require_merchant = require_roles([UserRole.ADMIN, UserRole.MERCHANT])

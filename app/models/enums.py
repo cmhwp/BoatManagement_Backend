@@ -117,4 +117,20 @@ class InventoryAction(str, Enum):
     """库存操作枚举"""
     IN = "in"                  # 入库
     OUT = "out"               # 出库
-    ADJUST = "adjust"         # 调整 
+    ADJUST = "adjust"         # 调整
+
+
+class IdentityType(str, Enum):
+    """身份证件类型枚举"""
+    ID_CARD = "id_card"               # 身份证
+    PASSPORT = "passport"             # 护照
+    DRIVER_LICENSE = "driver_license" # 驾驶证
+    OTHER = "other"                   # 其他
+
+
+class VerificationStatus(str, Enum):
+    """实名认证状态枚举"""
+    PENDING = "pending"         # 待审核
+    APPROVED = "approved"       # 认证通过
+    REJECTED = "rejected"       # 认证失败
+    EXPIRED = "expired"         # 认证过期

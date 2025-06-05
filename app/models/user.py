@@ -24,7 +24,7 @@ class User(Base):
     # 系统字段
     role = Column(SQLEnum(UserRole), default=UserRole.USER, nullable=False, comment="用户角色")
     status = Column(SQLEnum(UserStatus), default=UserStatus.ACTIVE, nullable=False, comment="用户状态")
-    is_verified = Column(Boolean, default=False, comment="是否已验证")
+    is_verified = Column(Boolean, default=False, comment="是否已实名认证")
     
     # 时间字段
     created_at = Column(DateTime, server_default=func.now(), comment="创建时间")
@@ -35,6 +35,7 @@ class User(Base):
     role_applications = relationship("RoleApplication", foreign_keys="RoleApplication.user_id", back_populates="user")
     merchant_info = relationship("Merchant", back_populates="user", uselist=False)
     crew_info = relationship("CrewInfo", back_populates="user", uselist=False)
+    identity_verification = relationship("IdentityVerification", foreign_keys="IdentityVerification.user_id", back_populates="user", uselist=False)
     
     def __repr__(self):
         return f"<User(id={self.id}, username='{self.username}', role='{self.role}')>" 

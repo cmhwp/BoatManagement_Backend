@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     # JWT配置
     secret_key: str = "your-secret-key-here-please-change-in-production"
     algorithm: str = "HS256"
-    access_token_expire_minutes: int = 30
+    access_token_expire_minutes: int = 3600
     
     # 应用配置
     app_name: str = "绿色智能船艇农文旅平台"
