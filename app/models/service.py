@@ -54,6 +54,7 @@ class Service(Base):
     
     # 关系
     merchant = relationship("Merchant", back_populates="services")
+    orders = relationship("Order", back_populates="service")
     
     def __repr__(self):
         return f"<Service(id={self.id}, name='{self.name}', type='{self.service_type}', status='{self.status}')>" 

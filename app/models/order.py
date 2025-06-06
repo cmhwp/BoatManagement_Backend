@@ -18,20 +18,26 @@ class Order(Base):
     order_type = Column(SQLEnum(OrderType), nullable=False, comment="订单类型")
     status = Column(SQLEnum(OrderStatus), default=OrderStatus.PENDING, comment="订单状态")
     
-    # 商品信息
+    # 关联资源信息
     service_id = Column(Integer, ForeignKey("services.id"), comment="服务ID")
     product_id = Column(Integer, ForeignKey("agricultural_products.id"), comment="农产品ID")
+    boat_id = Column(Integer, ForeignKey("boats.id"), comment="指定船艇ID")
+    crew_id = Column(Integer, ForeignKey("crew_info.id"), comment="指派船员ID")
+    
+    # 预约信息
     quantity = Column(Integer, default=1, comment="数量")
     unit_price = Column(Numeric(10, 2), nullable=False, comment="单价")
     
     # 金额信息
     subtotal = Column(Numeric(12, 2), nullable=False, comment="小计金额")
     discount_amount = Column(Numeric(10, 2), default=0, comment="优惠金额")
-    total_amount = Column(Numeric(12, 2), nullable=False, comment="总金额")
+    total_price = Column(Numeric(12, 2), nullable=False, comment="总金额")
     
-    # 服务时间信息（适用于服务订单）
+    # 服务时间信息（核心字段）
+    scheduled_at = Column(DateTime, nullable=False, comment="预约服务时间")
     service_date = Column(DateTime, comment="服务日期")
     service_time = Column(String(20), comment="服务时间段")
+    duration = Column(Integer, comment="服务时长(分钟)")
     participants = Column(Integer, comment="参与人数")
     
     # 联系信息
@@ -49,14 +55,18 @@ class Order(Base):
     created_at = Column(DateTime, server_default=func.now(), comment="下单时间")
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), comment="更新时间")
     confirmed_at = Column(DateTime, comment="确认时间")
+    assigned_at = Column(DateTime, comment="派单时间")
+    started_at = Column(DateTime, comment="开始时间")
     completed_at = Column(DateTime, comment="完成时间")
     cancelled_at = Column(DateTime, comment="取消时间")
     
     # 关系
     user = relationship("User")
     merchant = relationship("Merchant")
-    service = relationship("Service")
+    service = relationship("Service", back_populates="orders")
     product = relationship("AgriculturalProduct")
+    boat = relationship("Boat")
+    crew = relationship("CrewInfo", back_populates="orders")
     coupon = relationship("Coupon")
     payments = relationship("Payment", back_populates="order")
     reviews = relationship("Review", back_populates="order")

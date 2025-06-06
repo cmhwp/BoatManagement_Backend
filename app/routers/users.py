@@ -85,7 +85,7 @@ async def update_user_info(
     return ApiResponse.success_response(
         data=UserResponse.model_validate(updated_user),
         message="用户信息更新成功"
-    )
+    ) 
 
 
 @router.get("/me/verification-status", response_model=ApiResponse[dict], summary="获取实名认证状态")

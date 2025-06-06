@@ -59,13 +59,15 @@ class ServiceType(str, Enum):
 
 class OrderStatus(str, Enum):
     """订单状态枚举"""
-    PENDING = "pending"         # 待付款
-    PAID = "paid"              # 已付款
-    CONFIRMED = "confirmed"     # 已确认
-    IN_PROGRESS = "in_progress" # 进行中
-    COMPLETED = "completed"     # 已完成
-    CANCELLED = "cancelled"     # 已取消
-    REFUNDED = "refunded"      # 已退款
+    PENDING = "pending"                    # 待付款
+    PAID = "paid"                         # 已付款
+    PENDING_ASSIGNMENT = "pending_assignment"  # 待派单
+    CONFIRMED = "confirmed"               # 已确认/已派单
+    IN_PROGRESS = "in_progress"          # 进行中
+    COMPLETED = "completed"              # 已完成
+    AWAITING_REVIEW = "awaiting_review"  # 等待评价
+    CANCELLED = "cancelled"              # 已取消
+    REFUNDED = "refunded"               # 已退款
 
 
 class OrderType(str, Enum):

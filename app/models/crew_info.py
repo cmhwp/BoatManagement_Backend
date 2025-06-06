@@ -40,6 +40,7 @@ class CrewInfo(Base):
     # 关系
     user = relationship("User", back_populates="crew_info")
     schedules = relationship("Schedule", back_populates="crew")
+    orders = relationship("Order", back_populates="crew")
     
     def __repr__(self):
         return f"<CrewInfo(id={self.id}, license_no='{self.license_no}', is_available={self.is_available})>" 
