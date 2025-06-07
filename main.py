@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config.settings import settings
 from app.config.database import engine, Base
 from app.models import *  # 导入所有模型以便创建表
-from app.routers import auth, users, merchants, crews, boats, admin, identity_verification, upload, orders
+from app.routers import auth, users, merchants, crews, boats, admin, identity_verification, upload, orders, services
 
 # 创建数据库表
 Base.metadata.create_all(bind=engine)
@@ -32,6 +32,7 @@ app.include_router(users.router)  # 用户路由
 app.include_router(merchants.router)  # 商家路由
 app.include_router(crews.router)  # 船员路由
 app.include_router(boats.router)  # 船艇路由
+app.include_router(services.router)  # 服务路由
 app.include_router(orders.router)  # 订单路由
 app.include_router(admin.router)  # 管理员路由
 app.include_router(identity_verification.router)  # 实名认证路由
@@ -53,6 +54,7 @@ async def root():
             "商家管理",
             "船员管理", 
             "船艇管理",
+            "服务管理",
             "订单预约管理",
             "管理员功能"
         ]
@@ -80,6 +82,7 @@ async def api_info():
             "merchants": "/api/v1/merchants - 商家管理",
             "crews": "/api/v1/crews - 船员管理",
             "boats": "/api/v1/boats - 船艇管理",
+            "services": "/api/v1/services - 服务管理",
             "orders": "/api/v1/orders - 订单预约管理",
             "admin": "/api/v1/admin - 管理员功能"
         }
